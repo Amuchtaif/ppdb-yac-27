@@ -8,6 +8,15 @@
 require_once __DIR__ . '/config/site.php';
 require_once __DIR__ . '/config/content.php';
 
+// Check if pre-launch Countdown Mode is active & target datetime is in the future
+if (!empty($site['countdown']['active']) && !isset($_GET['preview_homepage'])) {
+    $targetTime = strtotime($site['countdown']['target_datetime'] ?? '2026-08-28T23:59:00+07:00');
+    if (time() < $targetTime) {
+        require __DIR__ . '/countdown.php';
+        exit;
+    }
+}
+
 // 2. Load Head & Header Layouts
 require __DIR__ . '/layouts/head.php';
 require __DIR__ . '/layouts/header.php';

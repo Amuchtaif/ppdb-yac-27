@@ -4,6 +4,9 @@
  * PPDB Assunnah Cirebon 2027/2028
  */
 
+// Set Default Timezone to WIB (Asia/Jakarta, UTC+7)
+date_default_timezone_set('Asia/Jakarta');
+
 $site = [
     'name' => 'PPDB Assunnah Cirebon',
     'organization' => 'Yayasan Assunnah Cirebon',
@@ -20,6 +23,11 @@ $site = [
     'registration_url' => 'daftar.php',
     'brochure_url' => 'assets/pdf/Brosur PPDB 27-28.pdf',
     'countdown_url' => 'countdown.php',
+    'countdown' => [
+        'active' => true,
+        'target_datetime' => '2026-08-24T13:47:00+07:00',
+        'target_formatted' => 'Senin, 24 Agustus 2026'
+    ],
     'announcement' => [
         'active' => true,
         'badge' => 'PPDB 2027/2028',

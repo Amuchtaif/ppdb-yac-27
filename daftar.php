@@ -115,85 +115,45 @@ require_once __DIR__ . '/layouts/head.php';
                         </div>
                     </div>
 
-                    <!-- Official Bank Account Cards Grid (Light Theme with Bank Logos) -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- BSI Light Theme Card -->
-                        <div class="p-6 rounded-3xl bg-white border-2 border-teal-500/30 hover:border-teal-500/70 shadow-md hover:shadow-xl transition-all duration-300 relative overflow-hidden group">
+                    <!-- Official Bank Account Card (BSI Single Account - Centered Layout) -->
+                    <div class="max-w-2xl mx-auto">
+                        <div class="p-6 sm:p-8 rounded-3xl bg-white border-2 border-teal-500/30 hover:border-teal-500/70 shadow-md hover:shadow-xl transition-all duration-300 relative overflow-hidden group">
                             <!-- Top Accent Line -->
                             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-teal-500 via-emerald-500 to-amber-500"></div>
 
-                            <div class="flex items-center justify-between gap-4 mb-4 pt-1">
+                            <div class="flex items-center justify-between gap-4 mb-5 pt-1">
                                 <!-- BSI Logo & Title -->
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-teal-600 text-white font-heading font-extrabold text-xs tracking-tighter flex items-center justify-center shadow-xs shrink-0">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-12 h-12 rounded-2xl bg-teal-600 text-white font-heading font-extrabold text-sm tracking-tighter flex items-center justify-center shadow-xs shrink-0">
                                         BSI
                                     </div>
                                     <div>
-                                        <h3 class="font-heading font-extrabold text-base text-[#0B192C] leading-tight">Bank Syariah Indonesia</h3>
-                                        <span class="text-[10px] font-bold text-teal-700 uppercase tracking-wider">Kode Bank: 451</span>
+                                        <h3 class="font-heading font-extrabold text-lg sm:text-xl text-[#0B192C] leading-tight">Bank Syariah Indonesia (BSI)</h3>
+                                        <span class="text-xs font-bold text-teal-700 uppercase tracking-wider">Kode Bank: 451</span>
                                     </div>
                                 </div>
 
-                                <span class="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-teal-50 text-teal-800 border border-teal-200">
-                                    Rekening Utama
+                                <span class="px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider rounded-full bg-teal-50 text-teal-800 border border-teal-200">
+                                    Rekening Resmi PPDB
                                 </span>
                             </div>
 
-                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 mb-3">
-                                <span class="text-xs text-slate-500 font-semibold block mb-1">Nomor Rekening Resmi (BSI):</span>
-                                <div class="flex items-center justify-between gap-2">
-                                    <span class="font-heading font-extrabold text-2xl text-teal-800 tracking-wider font-mono select-all">7154934997</span>
+                            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 mb-4">
+                                <span class="text-xs text-slate-500 font-semibold block mb-1.5">Nomor Rekening Pembayaran:</span>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                    <span class="font-heading font-extrabold text-3xl text-teal-800 tracking-wider font-mono select-all">7154934997</span>
                                     <button type="button" 
                                             onclick="navigator.clipboard.writeText('7154934997'); alert('Nomor Rekening BSI berhasil disalin!')" 
-                                            class="px-3.5 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer">
-                                        <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin
+                                            class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
+                                        <i data-lucide="copy" class="w-4 h-4"></i>
+                                        <span>Salin Rekening</span>
                                     </button>
                                 </div>
                             </div>
 
-                            <div class="flex items-center justify-between text-xs text-slate-600 font-medium px-1">
-                                <span>Atas Nama:</span>
-                                <span class="font-bold text-[#0B192C]">YAYASAN ASSUNNAH CIREBON</span>
-                            </div>
-                        </div>
-
-                        <!-- Bank Muamalat Light Theme Card -->
-                        <div class="p-6 rounded-3xl bg-white border-2 border-purple-500/30 hover:border-purple-500/70 shadow-md hover:shadow-xl transition-all duration-300 relative overflow-hidden group">
-                            <!-- Top Accent Line -->
-                            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-800"></div>
-
-                            <div class="flex items-center justify-between gap-4 mb-4 pt-1">
-                                <!-- Bank Muamalat Logo & Title -->
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-purple-700 text-white font-heading font-extrabold text-xs tracking-tighter flex items-center justify-center shadow-xs shrink-0">
-                                        BMI
-                                    </div>
-                                    <div>
-                                        <h3 class="font-heading font-extrabold text-base text-[#0B192C] leading-tight">Bank Muamalat</h3>
-                                        <span class="text-[10px] font-bold text-purple-700 uppercase tracking-wider">Kode Bank: 147</span>
-                                    </div>
-                                </div>
-
-                                <span class="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-purple-50 text-purple-800 border border-purple-200">
-                                    Rekening Alternatif
-                                </span>
-                            </div>
-
-                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 mb-3">
-                                <span class="text-xs text-slate-500 font-semibold block mb-1">Nomor Rekening Resmi (Muamalat):</span>
-                                <div class="flex items-center justify-between gap-2">
-                                    <span class="font-heading font-extrabold text-2xl text-purple-900 tracking-wider font-mono select-all">1310131313</span>
-                                    <button type="button" 
-                                            onclick="navigator.clipboard.writeText('1310131313'); alert('Nomor Rekening Bank Muamalat berhasil disalin!')" 
-                                            class="px-3.5 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer">
-                                        <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center justify-between text-xs text-slate-600 font-medium px-1">
-                                <span>Atas Nama:</span>
-                                <span class="font-bold text-[#0B192C]">YAYASAN ASSUNNAH</span>
+                            <div class="flex items-center justify-between text-xs sm:text-sm text-slate-600 font-medium px-1">
+                                <span>Atas Nama Rekening:</span>
+                                <strong class="font-heading font-extrabold text-[#0B192C]">YAYASAN ASSUNNAH CIREBON</strong>
                             </div>
                         </div>
                     </div>

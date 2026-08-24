@@ -506,7 +506,7 @@ $faqs = [
             ],
             [
                 'q' => 'Bagaimana metode pembayaran biaya pendaftaran?',
-                'a' => 'Pembayaran dilakukan via Virtual Account (VA) Bank Syariah Indonesia (BSI), Bank Muamalat, atau Transfer Bank Resmi Yayasan yang tertera pada invoice pendaftaran.'
+                'a' => 'Pembayaran dilakukan via Virtual Account (VA) Bank Syariah Indonesia (BSI).'
             ]
         ]
     ],
@@ -515,7 +515,7 @@ $faqs = [
         'questions' => [
             [
                 'q' => 'Fasilitas apa saja yang didapatkan oleh santri asrama (Boarding)?',
-                'a' => 'Santri boarding mendapatkan fasilitas kamar asrama ber-AC/kipas, tempat tidur & lemari pribadi, makan 3x sehari, layanan kesehatan/klinik, perbaikan seragam, serta bimbingan pengasuh 24 jam.'
+                'a' => 'Santri boarding mendapatkan fasilitas kamar asrama, tempat tidur & lemari pribadi, makan 3x sehari, layanan kesehatan/klinik, perbaikan seragam, serta bimbingan pengasuh 24 jam.'
             ],
             [
                 'q' => 'Kapan seragam dan buku pelajaran dibagikan?',

@@ -1,4 +1,4 @@
-<section id="alur" class="py-20 lg:py-24 bg-white scroll-mt-20">
+<section id="alur" class="pt-12 pb-16 lg:pt-16 lg:pb-20 bg-white scroll-mt-0">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         
         <?php

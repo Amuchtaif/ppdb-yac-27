@@ -1,9 +1,10 @@
 <?php
+date_default_timezone_set('Asia/Jakarta');
 require_once __DIR__ . '/config/site.php';
 
-// Target Countdown Time: 28 Agustus 2026 Jam 23:59:00 (WIB / UTC+7)
-$targetIsoDate = '2026-08-28T23:59:00+07:00';
-$targetFormatted = 'Jum\'at, 28 Agustus 2026';
+// Target Countdown Time from site configuration
+$targetIsoDate = $site['countdown']['target_datetime'] ?? '2026-08-28T23:59:00+07:00';
+$targetFormatted = $site['countdown']['target_formatted'] ?? 'Jum\'at, 28 Agustus 2026';
 ?>
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
@@ -12,6 +13,10 @@ $targetFormatted = 'Jum\'at, 28 Agustus 2026';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Countdown Pembukaan PPDB 2027/2028 - <?= htmlspecialchars($site['organization']) ?></title>
     <meta name="description" content="Hitung mundur pembukaan Pendaftaran Peserta Didik Baru (PPDB) Yayasan Assunnah Cirebon Tahun Ajaran 2027/2028.">
+
+    <!-- Favicon Logo YAC -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -160,6 +165,9 @@ $targetFormatted = 'Jum\'at, 28 Agustus 2026';
                     if (openedMsgEl) {
                         openedMsgEl.classList.remove('hidden');
                     }
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
                     return;
                 }
 

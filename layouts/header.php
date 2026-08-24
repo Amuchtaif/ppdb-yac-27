@@ -1,9 +1,13 @@
+<?php
+$currentScript = basename($_SERVER['PHP_SELF'] ?? '');
+$navPrefix = ($currentScript === 'index.php' || $currentScript === '') ? '' : 'index.php';
+?>
 <!-- Main Sticky Navbar -->
 <header id="main-navbar" class="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-xs transition-all duration-300">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-6">
         
         <!-- Brand Logo -->
-        <a href="#hero" class="flex items-center gap-3 group">
+        <a href="<?= $navPrefix ?>#hero" class="flex items-center gap-3 group">
             <img src="assets/images/png-logo-high.png" alt="Logo Assunnah Cirebon" class="w-10 h-10 object-contain group-hover:scale-105 transition-transform">
             <div class="flex flex-col">
                 <span class="font-heading font-extrabold text-base sm:text-lg text-slate-700 tracking-tight leading-none">
@@ -17,13 +21,13 @@
 
         <!-- Desktop Navigation Menu -->
         <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-700">
-            <a href="index.php#hero" class="hover:text-[#1E4E8C] transition-colors">Beranda</a>
-            <a href="index.php#program" class="hover:text-[#1E4E8C] transition-colors">Program</a>
-            <a href="index.php#keunggulan" class="hover:text-[#1E4E8C] transition-colors">Keunggulan</a>
-            <a href="index.php#biaya" class="hover:text-[#1E4E8C] transition-colors">Rincian Biaya</a>
-            <a href="index.php#syarat" class="hover:text-[#1E4E8C] transition-colors">Persyaratan</a>
-            <a href="index.php#faq" class="hover:text-[#1E4E8C] transition-colors">FAQ</a>
-            <a href="index.php#galeri" class="hover:text-[#1E4E8C] transition-colors">Galeri</a>
+            <a href="<?= $navPrefix ?>#hero" class="hover:text-[#1E4E8C] transition-colors">Beranda</a>
+            <a href="<?= $navPrefix ?>#program" class="hover:text-[#1E4E8C] transition-colors">Program</a>
+            <a href="<?= $navPrefix ?>#keunggulan" class="hover:text-[#1E4E8C] transition-colors">Keunggulan</a>
+            <a href="<?= $navPrefix ?>#biaya" class="hover:text-[#1E4E8C] transition-colors">Rincian Biaya</a>
+            <a href="<?= $navPrefix ?>#syarat" class="hover:text-[#1E4E8C] transition-colors">Persyaratan</a>
+            <a href="<?= $navPrefix ?>#faq" class="hover:text-[#1E4E8C] transition-colors">FAQ</a>
+            <a href="<?= $navPrefix ?>#galeri" class="hover:text-[#1E4E8C] transition-colors">Galeri</a>
         </nav>
         <!-- Header Actions -->
         <div class="flex items-center gap-4">
@@ -60,31 +64,31 @@
 
         <!-- Drawer Navigation Links -->
         <nav class="p-5 flex flex-col gap-1 text-sm font-semibold text-[#1E293B]">
-            <a href="index.php#hero" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
+            <a href="<?= $navPrefix ?>#hero" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
                 <i data-lucide="home" class="w-4 h-4 text-[#D4AF37]"></i> Beranda
             </a>
-            <a href="index.php#program" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
+            <a href="<?= $navPrefix ?>#program" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
                 <i data-lucide="book-open" class="w-4 h-4 text-[#D4AF37]"></i> Program Pendidikan
             </a>
-            <a href="index.php#keunggulan" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
+            <a href="<?= $navPrefix ?>#keunggulan" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
                 <i data-lucide="award" class="w-4 h-4 text-[#D4AF37]"></i> Keunggulan
             </a>
-            <a href="index.php#alur" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
+            <a href="<?= $navPrefix ?>#alur" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
                 <i data-lucide="git-merge" class="w-4 h-4 text-[#D4AF37]"></i> Alur Pendaftaran
             </a>
-            <a href="index.php#jadwal" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
+            <a href="<?= $navPrefix ?>#jadwal" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
                 <i data-lucide="calendar" class="w-4 h-4 text-[#D4AF37]"></i> Jadwal PPDB
             </a>
-            <a href="index.php#biaya" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
+            <a href="<?= $navPrefix ?>#biaya" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
                 <i data-lucide="wallet" class="w-4 h-4 text-[#D4AF37]"></i> Biaya Pendidikan
             </a>
-            <a href="index.php#syarat" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
+            <a href="<?= $navPrefix ?>#syarat" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
                 <i data-lucide="file-check" class="w-4 h-4 text-[#D4AF37]"></i> Syarat Pendaftaran
             </a>
-            <a href="index.php#faq" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
+            <a href="<?= $navPrefix ?>#faq" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
                 <i data-lucide="help-circle" class="w-4 h-4 text-[#D4AF37]"></i> FAQ
             </a>
-            <a href="index.php#galeri" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
+            <a href="<?= $navPrefix ?>#galeri" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
                 <i data-lucide="image" class="w-4 h-4 text-[#D4AF37]"></i> Galeri & Dokumentasi
             </a>
         </nav>
