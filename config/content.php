@@ -481,10 +481,6 @@ $faqs = [
             [
                 'q' => 'Apakah bisa mendaftar secara offline langsung ke sekolah?',
                 'a' => 'Seluruh proses pengisian formulir dilakukan secara online. Namun, Panitia PPDB menyediakan Sekretariat Layanan Bantu Pendaftaran di Yayasan Assunnah Cirebon bagi wali murid yang memerlukan pendampingan.'
-            ],
-            [
-                'q' => 'Bisakah mendaftar lebih dari satu anak dalam satu akun?',
-                'a' => 'Bisa. Sistem portal pendaftaran mendukung pendaftaran beberapa calon siswa (kakak-beradik) dalam satu akun wali murid.'
             ]
         ]
     ],
