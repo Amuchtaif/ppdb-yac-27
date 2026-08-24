@@ -1,0 +1,216 @@
+/* ==========================================================================
+   PPDB Assunnah Cirebon 2027/2028 - Master App Stylesheet
+   Design Tokens & Modern Utility Extensions (Navy Blue / Biru Dongker Theme)
+   ========================================================================== */
+
+:root {
+    /* Primary Navy Blue (Biru Dongker) Color Palette */
+    --color-primary-900: #0B192C;
+    --color-primary-800: #122947;
+    --color-primary-700: #183B68;
+    --color-primary-600: #1E4E8C;
+    --color-primary-500: #2563EB;
+    --color-primary-400: #3B82F6;
+    --color-primary-100: #DBEAFE;
+    --color-primary-50:  #EFF6FF;
+
+    /* Secondary Gold Accent Palette */
+    --color-gold-700: #8A6A16;
+    --color-gold-600: #A17B1E;
+    --color-gold-500: #D4AF37;
+    --color-gold-300: #E8D595;
+    --color-gold-100: #FDF8E8;
+
+    /* Neutral & Backgrounds */
+    --color-black:          #0A1118;
+    --color-text:           #1E293B;
+    --color-text-muted:     #64748B;
+    --color-border:         #E2E8F0;
+    --color-surface:        #FFFFFF;
+    --color-background:     #F8FAFC;
+    --color-background-alt: #F1F5F9;
+    --color-dark:           #07111D;
+
+    /* Semantic Feedback */
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-danger:  #EF4444;
+    --color-info:    #0284C7;
+
+    /* Typography */
+    --font-heading: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    /* Border Radius Tokens */
+    --radius-sm:   8px;
+    --radius-md:   12px;
+    --radius-lg:   18px;
+    --radius-xl:   24px;
+    --radius-pill: 9999px;
+
+    /* Shadow Elevations */
+    --shadow-sm: 0 2px 8px rgba(11, 25, 44, 0.06);
+    --shadow-md: 0 8px 24px rgba(11, 25, 44, 0.08);
+    --shadow-lg: 0 16px 40px rgba(11, 25, 44, 0.12);
+
+    /* Layout Constraints */
+    --container-width: 1200px;
+}
+
+/* --------------------------------------------------------------------------
+   Global Base Reset & Typography Setup
+   -------------------------------------------------------------------------- */
+html {
+    scroll-behavior: smooth;
+    font-family: var(--font-body);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #EFF6FF;
+}
+::-webkit-scrollbar-thumb {
+    background: #1E4E8C;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #122947;
+}
+
+/* --------------------------------------------------------------------------
+   Glassmorphism & Header Utilities
+   -------------------------------------------------------------------------- */
+.glass-header {
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-dark {
+    background: rgba(11, 25, 44, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.shadow-header {
+    box-shadow: 0 4px 20px rgba(11, 25, 44, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   Card & Interactive Components Hover States
+   -------------------------------------------------------------------------- */
+.hover-lift {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.program-card-img {
+    transition: transform 0.4s ease;
+}
+.program-card:hover .program-card-img {
+    transform: scale(1.05);
+}
+
+/* Active State for Tabs */
+.tab-btn-active {
+    background-color: var(--color-primary-600) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(30, 78, 140, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Accordion Animation
+   -------------------------------------------------------------------------- */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), opacity 0.25s ease, padding 0.25s ease;
+    opacity: 0;
+}
+.accordion-item.open .accordion-content {
+    max-height: 1000px;
+    opacity: 1;
+    transition: max-height 0.4s ease-in-out, opacity 0.3s ease;
+}
+.accordion-icon {
+    transition: transform 0.3s ease;
+}
+.accordion-item.open .accordion-icon {
+    transform: rotate(180deg);
+}
+
+/* --------------------------------------------------------------------------
+   Floating WhatsApp Button Pulse Animation
+   -------------------------------------------------------------------------- */
+@keyframes wa-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+.wa-float-btn {
+    animation: wa-pulse 2s infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Lightbox Modal Animation
+   -------------------------------------------------------------------------- */
+#lightbox-modal {
+    transition: opacity 0.3s ease;
+}
+#lightbox-modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+#lightbox-modal:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* --------------------------------------------------------------------------
+   React Bits - Particles Component Styles
+   -------------------------------------------------------------------------- */
+.particles-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.particles-container canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+

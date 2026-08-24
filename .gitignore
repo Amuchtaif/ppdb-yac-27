@@ -1,0 +1,22 @@
+# PPDB Assunnah Cirebon 2027/2028 .gitignore
+
+# Archive & Zip files
+*.zip
+*.tar.gz
+*.rar
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Temporary files
+scratch/
+tmp/
+*.log
