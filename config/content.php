@@ -304,7 +304,7 @@ $schedules = [
                 'desc' => 'Kedatangan santri baru sekaligus pembagian asrama dan kelas.'
             ],
             [
-                'date' => 'Senin - Rabu, 08 - 10 Juli 2027',
+                'date' => 'Kamis - Sabtu, 08 - 10 Juli 2027',
                 'title' => 'MATSAMA (Masa Ta\'aruf Siswa Madrasah)',
                 'desc' => 'Kegiatan MATSAMA (Masa Ta\'aruf Siswa Madrasah) khusus untuk jenjang MTs dan MA.'
             ]
@@ -502,7 +502,7 @@ $faqs = [
         'questions' => [
             [
                 'q' => 'Apakah biaya masuk dapat dicicil/diangsur?',
-                'a' => 'Ya, Yayasan Assunnah memberikan skema kemudahan pembayaran uang pangkal secara bertahap (maksimal 3 kali angsuran) sesuai dengan kesepakatan saat daftar ulang.'
+                'a' => 'Ya, pembayaran uang pangkal dapat dilakukan secara bertahap dengan batas maksimal pelunasan H+7 setelah daftar ulang. Untuk informasi lebih lanjut mengenai mekanisme dan ketentuan pembayaran, silakan menghubungi Admin PPDB.'
             ],
             [
                 'q' => 'Bagaimana metode pembayaran biaya pendaftaran?',
