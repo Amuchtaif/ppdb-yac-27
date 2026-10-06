@@ -52,12 +52,27 @@
         </div>
 
         <!-- Centered Showcase Image (Smaller & Frameless) -->
+        <?php
+        $heroImage = 'assets/images/hero-image.jpg';
+        if (!file_exists(__DIR__ . '/../' . $heroImage)) {
+            $heroImage = file_exists(__DIR__ . '/../assets/images/hero-image.png') 
+                ? 'assets/images/hero-image.png' 
+                : 'assets/images/hero-image-temp.png';
+        }
+        ?>
         <div class="relative max-w-xl mx-auto mt-6 sm:mt-8 mb-12 lg:mb-14 z-10 group">
             <!-- Soft warm artistic glow behind image -->
             <div class="absolute inset-0 bg-gradient-to-t from-blue-100/60 via-amber-100/30 to-transparent rounded-3xl blur-2xl pointer-events-none -z-10"></div>
 
-            <div class="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200/80 group-hover:shadow-2xl transition-all duration-500">
-                <img src="assets/images/hero-image.png" class="w-full h-auto object-contain rounded-2xl group-hover:scale-[1.02] transition-transform duration-700">
+            <div class="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200/80 group-hover:shadow-2xl transition-all duration-500 bg-white">
+                <img src="<?= htmlspecialchars($heroImage) ?>" 
+                     alt="PPDB Assunnah Cirebon 2027/2028" 
+                     width="640" 
+                     height="853"
+                     loading="eager" 
+                     fetchpriority="high"
+                     onerror="if(this.src.indexOf('hero-image.png') === -1){this.src='assets/images/hero-image.png';}else if(this.src.indexOf('hero-image-temp.png') === -1){this.src='assets/images/hero-image-temp.png';}"
+                     class="w-full h-auto object-contain rounded-2xl group-hover:scale-[1.02] transition-transform duration-700">
             </div>
         </div>
 
