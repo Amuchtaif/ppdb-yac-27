@@ -9,6 +9,6 @@
     
     <!-- React Bits - Particles WebGL Module -->
     <script type="module" src="./assets/js/particles.js"></script>
-    <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/app.js?v=<?= file_exists(__DIR__ . '/../assets/js/app.js') ? filemtime(__DIR__ . '/../assets/js/app.js') : '1.1' ?>"></script>
 </body>
 </html>

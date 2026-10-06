@@ -65,11 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Update Tab Button Active Classes
             pricingTabBtns.forEach(b => {
-                b.classList.remove('tab-btn-active', 'bg-[#0F6B42]', 'text-white');
-                b.classList.add('bg-white', 'text-[#1D2922]', 'border-gray-200');
+                b.classList.remove('tab-btn-active', 'bg-[#1E4E8C]', 'text-white', 'border-[#1E4E8C]');
+                b.classList.add('bg-white', 'text-[#1E293B]', 'border-slate-200');
             });
-            btn.classList.add('tab-btn-active', 'bg-[#0F6B42]', 'text-white');
-            btn.classList.remove('bg-white', 'text-[#1D2922]', 'border-gray-200');
+            btn.classList.add('tab-btn-active', 'bg-[#1E4E8C]', 'text-white', 'border-[#1E4E8C]');
+            btn.classList.remove('bg-white', 'text-[#1E293B]', 'border-slate-200');
 
             // Update Pricing Content Panes
             pricingPanes.forEach(pane => {
@@ -80,6 +80,83 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+    });
+
+
+    // 3.1 Brochure Preview Modal (Khusus Unit Baru: I'dad Mahad Aly & Mahad Aly)
+    const brochureModal = document.getElementById('brochure-modal');
+    const brochureModalClose = document.getElementById('brochure-modal-close');
+    const brochureModalTitle = document.getElementById('brochure-modal-title');
+    const brochureModalImg = document.getElementById('brochure-modal-img');
+    const brochureModalDownload = document.getElementById('brochure-modal-download');
+    const brochureModalExternal = document.getElementById('brochure-modal-external');
+    const previewBrochureBtns = document.querySelectorAll('.btn-preview-brochure');
+
+    function openBrochureModal(unitName, brochureUrl) {
+        if (!brochureModal) return;
+        if (brochureModalTitle) {
+            brochureModalTitle.textContent = `Preview Brosur - ${unitName}`;
+        }
+        if (brochureModalImg) {
+            brochureModalImg.src = brochureUrl;
+            brochureModalImg.alt = `Brosur ${unitName}`;
+        }
+        if (brochureModalDownload) {
+            brochureModalDownload.href = brochureUrl;
+            const cleanName = unitName.replace(/[^a-zA-Z0-9]/g, '-');
+            brochureModalDownload.setAttribute('download', `Brosur-${cleanName}.jpg`);
+        }
+        if (brochureModalExternal) {
+            brochureModalExternal.href = brochureUrl;
+        }
+
+        brochureModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+
+    function closeBrochureModal() {
+        if (!brochureModal) return;
+        brochureModal.classList.add('hidden');
+        if (brochureModalImg) {
+            brochureModalImg.src = '';
+        }
+        document.body.style.overflow = '';
+    }
+
+    if (previewBrochureBtns.length > 0) {
+        previewBrochureBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const unit = btn.getAttribute('data-unit') || 'PPDB Assunnah';
+                const url = btn.getAttribute('data-brochure') || '';
+                openBrochureModal(unit, url);
+            });
+        });
+    }
+
+    if (brochureModalClose) {
+        brochureModalClose.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeBrochureModal();
+        });
+    }
+
+    if (brochureModal) {
+        brochureModal.addEventListener('click', (e) => {
+            if (e.target === brochureModal) {
+                closeBrochureModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && brochureModal && !brochureModal.classList.contains('hidden')) {
+            closeBrochureModal();
+        }
     });
 
 

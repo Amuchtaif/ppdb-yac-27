@@ -192,6 +192,23 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 /* --------------------------------------------------------------------------
+   Brochure Preview Modal Animation
+   -------------------------------------------------------------------------- */
+#brochure-modal {
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+#brochure-modal.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+#brochure-modal:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* --------------------------------------------------------------------------
    React Bits - Particles Component Styles
    -------------------------------------------------------------------------- */
 .particles-container {

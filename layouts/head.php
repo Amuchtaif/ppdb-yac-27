@@ -69,6 +69,6 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Custom App CSS -->
-    <link rel="stylesheet" href="./assets/css/app.css">
+    <link rel="stylesheet" href="./assets/css/app.css?v=<?= file_exists(__DIR__ . '/../assets/css/app.css') ? filemtime(__DIR__ . '/../assets/css/app.css') : '1.1' ?>">
 </head>
 <body class="bg-[#F8FAFC] text-[#1E293B] font-body antialiased flex flex-col min-h-screen">

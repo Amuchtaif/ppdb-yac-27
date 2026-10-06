@@ -391,6 +391,42 @@ $pricing = [
             ['item' => 'Total Biaya Masuk Awal (Termasuk SPP Juli)', 'cost' => 'Rp 24.650.000'],
             ['item' => 'SPP Bulanan (Termasuk Asrama & Makan)', 'cost' => 'Rp 1.900.000']
         ]
+    ],
+    'idad_mahadaly' => [
+        'name' => "I'dad Mahad Aly",
+        'badge' => 'Persiapan Mahasantri',
+        'total_entrance' => 'Rp 8.350.000',
+        'registration' => 'Rp 500.000',
+        'monthly_spp' => 'Rp 1.100.000',
+        'note' => 'Tersedia pilihan Asrama (Total Masuk Rp 8.350.000, SPP Rp 1.100.000) dan Non-Asrama (Total Masuk Rp 5.200.000, SPP Rp 450.000). Rincian lengkap tertera pada brosur resmi.',
+        'has_brochure' => true,
+        'brochure_url' => 'assets/images/Brosur Idad V2.jpg',
+        'details' => [
+            ['item' => 'Biaya Pendaftaran / Formulir', 'cost' => 'Rp 500.000'],
+            ['item' => 'Total Biaya Masuk Asrama', 'cost' => 'Rp 8.350.000'],
+            ['item' => 'Total Biaya Masuk Non-Asrama', 'cost' => 'Rp 5.200.000'],
+            ['item' => 'SPP Bulanan Asrama', 'cost' => 'Rp 1.100.000'],
+            ['item' => 'SPP Bulanan Non-Asrama', 'cost' => 'Rp 450.000']
+        ]
+    ],
+    'mahadaly' => [
+        'name' => 'Mahad Aly',
+        'badge' => 'Tersedia Beasiswa',
+        'total_entrance' => 'Rp 8.900.000',
+        'registration' => 'Rp 500.000',
+        'monthly_spp' => 'Rp 1.100.000',
+        'note' => 'Tersedia Jalur Beasiswa (Total Masuk Rp 500.000, SPP Gratis), Jalur Asrama (Total Masuk Rp 8.900.000, SPP Rp 1.100.000), dan Non-Asrama (Rp 6.750.000, SPP Rp 450.000). Rincian lengkap tertera pada brosur resmi.',
+        'has_brochure' => true,
+        'brochure_url' => 'assets/images/Brosur Mahad Aly V2.jpg',
+        'details' => [
+            ['item' => 'Biaya Pendaftaran / Formulir', 'cost' => 'Rp 500.000'],
+            ['item' => 'Total Biaya Jalur Beasiswa', 'cost' => 'Rp 500.000'],
+            ['item' => 'Total Biaya Masuk Asrama', 'cost' => 'Rp 8.900.000'],
+            ['item' => 'Total Biaya Masuk Non-Asrama', 'cost' => 'Rp 6.750.000'],
+            ['item' => 'SPP Bulanan Beasiswa', 'cost' => 'GRATIS'],
+            ['item' => 'SPP Bulanan Asrama', 'cost' => 'Rp 1.100.000'],
+            ['item' => 'SPP Bulanan Non-Asrama', 'cost' => 'Rp 450.000']
+        ]
     ]
 ];
 
