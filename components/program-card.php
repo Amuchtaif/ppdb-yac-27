@@ -49,19 +49,19 @@ $slug = $prog['slug'] ?? 'sdit';
 $style = $programStyles[$slug] ?? $programStyles['sdit'];
 ?>
 
-<div class="program-card bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-xs hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between group relative overflow-hidden">
-    <!-- Top Left Colored Accent Indicator -->
-    <div class="absolute top-0 left-0 w-24 h-1.5 <?= $style['color_bg'] ?> rounded-br-full transition-all duration-300 group-hover:w-full"></div>
+<div class="program-card bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 hover:border-[#1E4E8C]/30 shadow-xs hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between group relative overflow-hidden">
+    <!-- Top Accent Line -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-[#1E4E8C]"></div>
 
     <div>
         <!-- Card Header: Icon Avatar & Number Watermark -->
         <div class="flex items-start justify-between gap-4 mb-5 pt-2">
-            <div class="w-12 h-12 rounded-2xl <?= $style['icon_bg'] ?> border shadow-xs flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+            <div class="w-12 h-12 rounded-2xl bg-[#EFF6FF] text-[#1E4E8C] border border-[#DBEAFE] shadow-xs flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#1E4E8C] group-hover:text-white transition-all duration-300">
                 <i data-lucide="<?= $style['icon'] ?>" class="w-6 h-6"></i>
             </div>
             
             <div class="flex items-center gap-3">
-                <span class="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full border <?= $style['pill_bg'] ?>">
+                <span class="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-[#EFF6FF] text-[#1E4E8C] border border-[#DBEAFE]">
                     <?= htmlspecialchars($prog['badge']) ?>
                 </span>
                 <span class="font-heading font-extrabold text-2xl text-slate-200 group-hover:text-slate-400 transition-colors select-none">
@@ -75,7 +75,7 @@ $style = $programStyles[$slug] ?? $programStyles['sdit'];
             <h3 class="font-heading font-extrabold text-xl text-[#0B192C] group-hover:text-[#1E4E8C] transition-colors leading-snug">
                 <?= htmlspecialchars($prog['name']) ?>
             </h3>
-            <p class="text-xs font-bold text-[#8A6A16] mt-0.5 tracking-wide">
+            <p class="text-xs font-semibold text-[#1E4E8C] mt-0.5 tracking-wide">
                 <?= htmlspecialchars($prog['tagline']) ?>
             </p>
         </div>
@@ -85,7 +85,7 @@ $style = $programStyles[$slug] ?? $programStyles['sdit'];
             <ul class="space-y-2.5 mb-6">
                 <?php foreach ($prog['features'] as $feat): ?>
                     <li class="text-xs text-slate-600 leading-relaxed flex items-start gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full <?= $style['color_bg'] ?> shrink-0 mt-1.5"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#1E4E8C] shrink-0 mt-1.5"></span>
                         <span><?= htmlspecialchars($feat) ?></span>
                     </li>
                 <?php endforeach; ?>

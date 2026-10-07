@@ -137,7 +137,7 @@ $programs = [
         'gender' => 'Putra & Putri',
         'description' => 'Pencetakan kader ulama dan da\'i yang mendalam dalam ilmu Fiqh, Usul Fiqh, Hadits, serta dakwah islamiyah berdasarkan Al-Qur\'an dan As-Sunnah.',
         'features' => [
-            'Program S1 Takhashshus Fiqh & Usul Fiqh.',
+            'Program S1 Takhashshus Ilmu Syar\'i.',
             'Pengampu Lulusan LIPIA, Al-Azhar, & Universitas Madinah.',
             'Fasilitas Beasiswa Pendidikan & Asrama Mahasantri.'
         ],
@@ -307,6 +307,23 @@ $schedules = [
                 'date' => 'Kamis - Sabtu, 08 - 10 Juli 2027',
                 'title' => 'MATSAMA (Masa Ta\'aruf Siswa Madrasah)',
                 'desc' => 'Kegiatan MATSAMA (Masa Ta\'aruf Siswa Madrasah) khusus untuk jenjang MTs dan MA.'
+            ]
+        ]
+    ],
+    'mahadali' => [
+        'name' => 'Ma\'had \'Aly & I\'dad Ma\'had Aly',
+        'badge' => 'Ma\'had Aly',
+        'icon' => 'graduation-cap',
+        'items' => [
+            [
+                'date' => 'Rabu, 14 Juli 2027',
+                'title' => 'Kedatangan Mahasiswa Baru',
+                'desc' => 'Kedatangan mahasiswa baru Ma\'had Aly sekaligus pembagian asrama.'
+            ],
+            [
+                'date' => 'Kamis - Jum\'at, 15 - 16 Juli 2027',
+                'title' => 'Masa Perkenalan',
+                'desc' => 'Kegiatan masa perkenalan mahasiswa baru dan orientasi perkuliahan.'
             ]
         ]
     ]
@@ -497,8 +514,7 @@ $requirements = [
         'items' => [
             'Mengisi formulir pendaftaran online',
             'Fotokopi Ijazah SMA/MA/I\'dad dilegalisir',
-            'Memiliki hafalan Al-Qur\'an minimal 3 Juz',
-            'Mampu membaca kitab gundul dasar (Nahu Shorof)',
+            'Mampu membaca kitab gundul dasar (Nahwu Shorof)',
             'Surat rekomendasi lembaga / ulama',
             'Mengikuti ujian tulis Bahasa Arab, Syariat, & Wawancara'
         ]
