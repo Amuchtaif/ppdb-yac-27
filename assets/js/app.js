@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mobileDrawer.classList.remove('translate-x-full');
             if (mobileBackdrop) mobileBackdrop.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         } else {
             mobileDrawer.classList.add('translate-x-full');
             if (mobileBackdrop) mobileBackdrop.classList.add('hidden');
@@ -79,6 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     pane.classList.add('hidden');
                 }
             });
+
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         });
     });
 

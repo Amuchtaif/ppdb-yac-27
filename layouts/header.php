@@ -1,19 +1,20 @@
 <?php
 $currentScript = basename($_SERVER['PHP_SELF'] ?? '');
 $navPrefix = ($currentScript === 'index.php' || $currentScript === '') ? '' : 'index.php';
+$waNumber = $site['whatsapp_number'] ?? '6281321114500';
 ?>
 <!-- Main Sticky Navbar -->
-<header id="main-navbar" class="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-xs transition-all duration-300">
+<header id="main-navbar" class="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all duration-300">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-6">
         
         <!-- Brand Logo -->
         <a href="<?= $navPrefix ?>#hero" class="flex items-center gap-3 group">
             <img src="assets/images/png-logo-high.png" alt="Logo Assunnah Cirebon" class="w-10 h-10 object-contain group-hover:scale-105 transition-transform">
             <div class="flex flex-col">
-                <span class="font-heading font-extrabold text-base sm:text-lg text-slate-700 tracking-tight leading-none">
+                <span class="font-heading font-extrabold text-base sm:text-lg text-[#0B192C] tracking-tight leading-none">
                     PPDB ASSUNNAH
                 </span>
-                <span class="text-[10px] font-bold text-[#1E4E8C] tracking-wider uppercase">
+                <span class="text-[10px] font-bold text-[#1E4E8C] tracking-wider uppercase mt-0.5">
                     Tahun Ajaran 2027/2028
                 </span>
             </div>
@@ -29,79 +30,91 @@ $navPrefix = ($currentScript === 'index.php' || $currentScript === '') ? '' : 'i
             <a href="<?= $navPrefix ?>#faq" class="hover:text-[#1E4E8C] transition-colors">FAQ</a>
             <a href="<?= $navPrefix ?>#galeri" class="hover:text-[#1E4E8C] transition-colors">Galeri</a>
         </nav>
+
         <!-- Header Actions -->
         <div class="flex items-center gap-4">
-            <a href="<?= htmlspecialchars($site['registration_url']) ?>" class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-heading font-bold text-sm bg-[#4F46E5] hover:bg-[#4338CA] text-white shadow-md shadow-blue-900/20 hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+            <a href="<?= htmlspecialchars($site['registration_url']) ?>" class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-heading font-bold text-sm bg-[#1E4E8C] hover:bg-[#122947] text-white shadow-xs hover:shadow-md transition-all">
                 Daftar PPDB Online
             </a>
 
             <!-- Mobile Hamburger Button -->
-            <button id="mobile-menu-btn" type="button" class="lg:hidden p-2.5 rounded-xl text-slate-900 hover:bg-slate-100 transition-colors" aria-label="Buka Menu">
-                <i data-lucide="menu" class="w-6 h-6"></i>
+            <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors border border-slate-200/80 cursor-pointer" aria-label="Buka Menu">
+                <i data-lucide="menu" class="w-5 h-5"></i>
             </button>
         </div>
     </div>
 </header>
 
 <!-- Mobile Navigation Drawer & Backdrop -->
-<div id="mobile-backdrop" class="fixed inset-0 bg-black/60 z-50 hidden backdrop-blur-sm transition-opacity"></div>
+<div id="mobile-backdrop" class="fixed inset-0 bg-slate-900/50 z-50 hidden backdrop-blur-xs transition-opacity duration-300"></div>
 
-<div id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-[300px] max-w-[85vw] bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between">
-    <div>
+<div id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-[320px] max-w-[85vw] bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between border-l border-slate-200">
+    <!-- Top Content Area -->
+    <div class="flex-1 overflow-y-auto">
         <!-- Drawer Header -->
-        <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-[#EFF6FF]">
+        <div class="p-5 border-b border-slate-200/80 flex items-center justify-between bg-white">
             <div class="flex items-center gap-2.5">
                 <img src="assets/images/png-logo-high.png" alt="Logo Assunnah" class="w-9 h-9 object-contain">
                 <div class="flex flex-col">
                     <span class="font-heading font-bold text-sm text-[#0B192C]">PPDB Assunnah</span>
-                    <span class="text-[10px] font-semibold text-[#1E4E8C]">T.A 2027/2028</span>
+                    <span class="text-[10px] font-bold text-[#1E4E8C] uppercase tracking-wider">T.A. 2027/2028</span>
                 </div>
             </div>
-            <button id="mobile-menu-close" type="button" class="p-2 rounded-lg text-gray-500 hover:text-gray-800 hover:bg-gray-200/60 transition-colors">
-                <i data-lucide="x" class="w-5 h-5"></i>
+            <button id="mobile-menu-close" type="button" class="w-8 h-8 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-center transition-colors border border-slate-200/60 cursor-pointer" aria-label="Tutup Menu">
+                <i data-lucide="x" class="w-4 h-4"></i>
             </button>
         </div>
 
-        <!-- Drawer Navigation Links -->
-        <nav class="p-5 flex flex-col gap-1 text-sm font-semibold text-[#1E293B]">
-            <a href="<?= $navPrefix ?>#hero" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
-                <i data-lucide="home" class="w-4 h-4 text-[#D4AF37]"></i> Beranda
+        <!-- Navigation Links: Typography-first, clean editorial list -->
+        <nav class="px-5 py-4 divide-y divide-slate-100 text-sm font-semibold text-slate-700">
+            <a href="<?= $navPrefix ?>#hero" class="mobile-nav-link flex items-center justify-between py-3 hover:text-[#1E4E8C] transition-colors group">
+                <span>Beranda</span>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-[#1E4E8C] group-hover:translate-x-0.5 transition-all"></i>
             </a>
-            <a href="<?= $navPrefix ?>#program" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
-                <i data-lucide="book-open" class="w-4 h-4 text-[#D4AF37]"></i> Program Pendidikan
+            <a href="<?= $navPrefix ?>#program" class="mobile-nav-link flex items-center justify-between py-3 hover:text-[#1E4E8C] transition-colors group">
+                <span>Program Pendidikan</span>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-[#1E4E8C] group-hover:translate-x-0.5 transition-all"></i>
             </a>
-            <a href="<?= $navPrefix ?>#keunggulan" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
-                <i data-lucide="award" class="w-4 h-4 text-[#D4AF37]"></i> Keunggulan
+            <a href="<?= $navPrefix ?>#keunggulan" class="mobile-nav-link flex items-center justify-between py-3 hover:text-[#1E4E8C] transition-colors group">
+                <span>Keunggulan</span>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-[#1E4E8C] group-hover:translate-x-0.5 transition-all"></i>
             </a>
-            <a href="<?= $navPrefix ?>#alur" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
-                <i data-lucide="git-merge" class="w-4 h-4 text-[#D4AF37]"></i> Alur Pendaftaran
+            <a href="<?= $navPrefix ?>#alur" class="mobile-nav-link flex items-center justify-between py-3 hover:text-[#1E4E8C] transition-colors group">
+                <span>Alur Pendaftaran</span>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-[#1E4E8C] group-hover:translate-x-0.5 transition-all"></i>
             </a>
-            <a href="<?= $navPrefix ?>#jadwal" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
-                <i data-lucide="calendar" class="w-4 h-4 text-[#D4AF37]"></i> Jadwal PPDB
+            <a href="<?= $navPrefix ?>#jadwal" class="mobile-nav-link flex items-center justify-between py-3 hover:text-[#1E4E8C] transition-colors group">
+                <span>Jadwal PPDB</span>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-[#1E4E8C] group-hover:translate-x-0.5 transition-all"></i>
             </a>
-            <a href="<?= $navPrefix ?>#biaya" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
-                <i data-lucide="wallet" class="w-4 h-4 text-[#D4AF37]"></i> Biaya Pendidikan
+            <a href="<?= $navPrefix ?>#biaya" class="mobile-nav-link flex items-center justify-between py-3 hover:text-[#1E4E8C] transition-colors group">
+                <span>Rincian Biaya</span>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-[#1E4E8C] group-hover:translate-x-0.5 transition-all"></i>
             </a>
-            <a href="<?= $navPrefix ?>#syarat" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
-                <i data-lucide="file-check" class="w-4 h-4 text-[#D4AF37]"></i> Syarat Pendaftaran
+            <a href="<?= $navPrefix ?>#syarat" class="mobile-nav-link flex items-center justify-between py-3 hover:text-[#1E4E8C] transition-colors group">
+                <span>Syarat Pendaftaran</span>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-[#1E4E8C] group-hover:translate-x-0.5 transition-all"></i>
             </a>
-            <a href="<?= $navPrefix ?>#faq" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
-                <i data-lucide="help-circle" class="w-4 h-4 text-[#D4AF37]"></i> FAQ
+            <a href="<?= $navPrefix ?>#faq" class="mobile-nav-link flex items-center justify-between py-3 hover:text-[#1E4E8C] transition-colors group">
+                <span>FAQ & Pertanyaan</span>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-[#1E4E8C] group-hover:translate-x-0.5 transition-all"></i>
             </a>
-            <a href="<?= $navPrefix ?>#galeri" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#EFF6FF] hover:text-[#1E4E8C] transition-colors">
-                <i data-lucide="image" class="w-4 h-4 text-[#D4AF37]"></i> Galeri & Dokumentasi
+            <a href="<?= $navPrefix ?>#galeri" class="mobile-nav-link flex items-center justify-between py-3 hover:text-[#1E4E8C] transition-colors group">
+                <span>Galeri</span>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-[#1E4E8C] group-hover:translate-x-0.5 transition-all"></i>
             </a>
         </nav>
     </div>
 
-    <!-- Drawer Footer CTA -->
-    <div class="p-5 border-t border-gray-100 bg-gray-50 flex flex-col gap-2.5">
-        <a href="<?= htmlspecialchars($site['registration_url']) ?>" class="mobile-nav-link w-full py-3 rounded-xl font-heading font-bold text-center text-sm bg-[#0B192C] text-[#E8D595] shadow-md">
-            Daftar PPDB Online
+    <!-- Drawer Footer Actions -->
+    <div class="p-5 border-t border-slate-200 bg-slate-50/70 space-y-2.5">
+        <a href="<?= htmlspecialchars($site['registration_url']) ?>" class="mobile-nav-link w-full py-3 rounded-xl font-heading font-bold text-center text-sm bg-[#1E4E8C] hover:bg-[#122947] text-white shadow-xs transition-colors flex items-center justify-center gap-2">
+            <span>Daftar PPDB Online</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
-        <a href="https://wa.me/<?= htmlspecialchars($site['whatsapp_number']) ?>" target="_blank" class="w-full py-3 rounded-xl font-semibold text-center text-xs text-white bg-[#25D366] hover:bg-[#20ba5a] transition-colors flex items-center justify-center gap-2">
-            <i class="fa-brands fa-whatsapp text-lg"></i> Chat Admin PPDB
+        <a href="https://wa.me/<?= htmlspecialchars($waNumber) ?>" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 rounded-xl font-semibold text-center text-xs text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 transition-colors flex items-center justify-center gap-2">
+            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i>
+            <span>Konsultasi Panitia PPDB</span>
         </a>
     </div>
 </div>
-

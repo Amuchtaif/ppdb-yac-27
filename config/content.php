@@ -396,8 +396,21 @@ $pricing = [
             ['item' => 'SPP Bulanan (Termasuk Asrama & Makan)', 'cost' => 'Rp 1.900.000']
         ]
     ],
+    'ma_fullday' => [
+        'name' => 'MA Fullday',
+        'badge' => 'Full Day',
+        'total_entrance' => 'Rp 20.350.000',
+        'registration' => 'Rp 550.000',
+        'monthly_spp' => 'Rp 1.100.000',
+        'note' => 'Termasuk foto, uang pangkal, infak bangunan, SPP bulan Juli, komite, penunjang KBM, alat makan, paket seragam dan buku.',
+        'details' => [
+            ['item' => 'Biaya Pendaftaran / Formulir', 'cost' => 'Rp 550.000'],
+            ['item' => 'Total Biaya Masuk Awal (Termasuk SPP Juli)', 'cost' => 'Rp 20.900.000'],
+            ['item' => 'SPP Bulanan', 'cost' => 'Rp 1.100.000']
+        ]
+    ],
     'ma' => [
-        'name' => 'MA Assunnah',
+        'name' => 'MA Boarding',
         'badge' => 'Boarding / Asrama',
         'total_entrance' => 'Rp 24.100.000',
         'registration' => 'Rp 550.000',
