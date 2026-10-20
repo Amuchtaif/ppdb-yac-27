@@ -88,7 +88,299 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // 3.1 Brochure Preview Modal (Khusus Unit Baru: I'dad Mahad Aly & Mahad Aly)
+    /**
+     * Reusable High-Performance Smooth Zoom & Pan Viewer Controller
+     * Provides:
+     * - Mouse wheel scroll-to-zoom (cursor-anchored)
+     * - Smooth drag-to-pan when zoomed in with boundary constraints
+     * - Double-click toggle (zoom to 2.4x / reset to 1x)
+     * - Touch swipe & pinch-to-zoom on mobile/tablet
+     * - Zoom controls (+, -, reset to 100%, fit screen)
+     * - Real-time percentage badge
+     */
+    function createZoomPanViewer(options) {
+        const {
+            viewportEl,
+            imageEl,
+            zoomInBtn,
+            zoomOutBtn,
+            zoomResetBtn,
+            zoomFitBtn,
+            percentBadgeEl,
+            hintBadgeEl,
+            minZoom = 0.6,
+            maxZoom = 4.5,
+            zoomStep = 1.25,
+            onCloseRequest = null
+        } = options;
+
+        if (!viewportEl || !imageEl) return null;
+
+        let scale = 1;
+        let panX = 0;
+        let panY = 0;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let hasMoved = false;
+        let initialPinchDistance = null;
+        let initialScale = 1;
+        let hintTimer = null;
+
+        function applyTransform(withTransition = false) {
+            if (withTransition) {
+                imageEl.style.transition = 'transform 0.22s cubic-bezier(0.16, 1, 0.3, 1)';
+            } else {
+                imageEl.style.transition = 'none';
+            }
+
+            imageEl.style.transform = `translate3d(${panX}px, ${panY}px, 0px) scale(${scale})`;
+
+            // Dynamic cursor styling
+            if (scale > 1.05) {
+                imageEl.style.cursor = isDragging ? 'grabbing' : 'grab';
+                viewportEl.style.cursor = isDragging ? 'grabbing' : 'grab';
+            } else {
+                imageEl.style.cursor = 'zoom-in';
+                viewportEl.style.cursor = 'default';
+            }
+
+            // Update percentage badge
+            if (percentBadgeEl) {
+                percentBadgeEl.textContent = `${Math.round(scale * 100)}%`;
+            }
+        }
+
+        function getPanBounds(currentScale) {
+            if (currentScale <= 1.02) {
+                return { minX: 0, maxX: 0, minY: 0, maxY: 0 };
+            }
+            const vpRect = viewportEl.getBoundingClientRect();
+            const imgRect = imageEl.getBoundingClientRect();
+
+            const baseW = imgRect.width / (scale || 1);
+            const baseH = imgRect.height / (scale || 1);
+            const scaledW = baseW * currentScale;
+            const scaledH = baseH * currentScale;
+
+            const maxPanX = Math.max(0, (scaledW - vpRect.width) / 2 + 120);
+            const maxPanY = Math.max(0, (scaledH - vpRect.height) / 2 + 120);
+
+            return {
+                minX: -maxPanX,
+                maxX: maxPanX,
+                minY: -maxPanY,
+                maxY: maxPanY
+            };
+        }
+
+        function clampPan(targetX, targetY, currentScale) {
+            const bounds = getPanBounds(currentScale);
+            return {
+                x: Math.min(bounds.maxX, Math.max(bounds.minX, targetX)),
+                y: Math.min(bounds.maxY, Math.max(bounds.minY, targetY))
+            };
+        }
+
+        function zoomTo(targetScale, focalX = 0, focalY = 0, withTransition = true) {
+            const clampedScale = Math.min(Math.max(targetScale, minZoom), maxZoom);
+            if (Math.abs(clampedScale - scale) < 0.005) return;
+
+            if (clampedScale <= 1.02) {
+                scale = 1;
+                panX = 0;
+                panY = 0;
+            } else {
+                const ratio = clampedScale / scale;
+                const nextX = focalX - (focalX - panX) * ratio;
+                const nextY = focalY - (focalY - panY) * ratio;
+                const clamped = clampPan(nextX, nextY, clampedScale);
+                scale = clampedScale;
+                panX = clamped.x;
+                panY = clamped.y;
+            }
+
+            applyTransform(withTransition);
+        }
+
+        function resetZoom(withTransition = true) {
+            scale = 1;
+            panX = 0;
+            panY = 0;
+            applyTransform(withTransition);
+        }
+
+        function showHint() {
+            if (!hintBadgeEl) return;
+            hintBadgeEl.classList.remove('opacity-0');
+            if (hintTimer) clearTimeout(hintTimer);
+            hintTimer = setTimeout(() => {
+                if (hintBadgeEl) hintBadgeEl.classList.add('opacity-0');
+            }, 3200);
+        }
+
+        // --- Event Listeners ---
+
+        // 1. Mouse Wheel Scroll-to-Zoom
+        function onWheel(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const rect = viewportEl.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left - rect.width / 2;
+            const mouseY = e.clientY - rect.top - rect.height / 2;
+
+            const factor = e.deltaY < 0 ? 1.15 : 0.869;
+            zoomTo(scale * factor, mouseX, mouseY, false);
+        }
+
+        // 2. Drag & Pan
+        function onMouseDown(e) {
+            if (e.button !== 0) return; // Left click only
+            isDragging = true;
+            hasMoved = false;
+            startX = e.clientX - panX;
+            startY = e.clientY - panY;
+            applyTransform(false);
+        }
+
+        function onMouseMove(e) {
+            if (!isDragging) return;
+            const diffX = Math.abs(e.clientX - (startX + panX));
+            const diffY = Math.abs(e.clientY - (startY + panY));
+            if (diffX > 4 || diffY > 4) {
+                hasMoved = true;
+            }
+
+            const rawX = e.clientX - startX;
+            const rawY = e.clientY - startY;
+            const clamped = clampPan(rawX, rawY, scale);
+            panX = clamped.x;
+            panY = clamped.y;
+            applyTransform(false);
+        }
+
+        function onMouseUp(e) {
+            if (!isDragging) return;
+            isDragging = false;
+            applyTransform(false);
+
+            // If user clicked viewport backdrop directly without dragging, close modal
+            if (!hasMoved && e.target === viewportEl && onCloseRequest) {
+                onCloseRequest();
+            }
+        }
+
+        // 3. Double Click Toggle
+        function onDoubleClick(e) {
+            e.preventDefault();
+            if (scale > 1.15) {
+                resetZoom(true);
+            } else {
+                const rect = viewportEl.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left - rect.width / 2;
+                const mouseY = e.clientY - rect.top - rect.height / 2;
+                zoomTo(2.4, mouseX, mouseY, true);
+            }
+        }
+
+        // 4. Touch Gestures (Pinch to zoom & single finger pan)
+        function onTouchStart(e) {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                hasMoved = false;
+                startX = e.touches[0].clientX - panX;
+                startY = e.touches[0].clientY - panY;
+            } else if (e.touches.length === 2) {
+                isDragging = false;
+                initialPinchDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                initialScale = scale;
+            }
+        }
+
+        function onTouchMove(e) {
+            if (e.touches.length === 1 && isDragging && scale > 1.05) {
+                e.preventDefault();
+                hasMoved = true;
+                const rawX = e.touches[0].clientX - startX;
+                const rawY = e.touches[0].clientY - startY;
+                const clamped = clampPan(rawX, rawY, scale);
+                panX = clamped.x;
+                panY = clamped.y;
+                applyTransform(false);
+            } else if (e.touches.length === 2 && initialPinchDistance) {
+                e.preventDefault();
+                const dist = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                const pinchRatio = dist / initialPinchDistance;
+                zoomTo(initialScale * pinchRatio, 0, 0, false);
+            }
+        }
+
+        function onTouchEnd(e) {
+            if (e.touches.length === 0) {
+                isDragging = false;
+                initialPinchDistance = null;
+            } else if (e.touches.length === 1) {
+                initialPinchDistance = null;
+                startX = e.touches[0].clientX - panX;
+                startY = e.touches[0].clientY - panY;
+            }
+        }
+
+        // Bind events
+        viewportEl.addEventListener('wheel', onWheel, { passive: false });
+        viewportEl.addEventListener('mousedown', onMouseDown);
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+        viewportEl.addEventListener('dblclick', onDoubleClick);
+        viewportEl.addEventListener('touchstart', onTouchStart, { passive: false });
+        viewportEl.addEventListener('touchmove', onTouchMove, { passive: false });
+        viewportEl.addEventListener('touchend', onTouchEnd);
+
+        // Zoom Buttons
+        if (zoomInBtn) {
+            zoomInBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                zoomTo(scale * zoomStep, 0, 0, true);
+            });
+        }
+        if (zoomOutBtn) {
+            zoomOutBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                zoomTo(scale / zoomStep, 0, 0, true);
+            });
+        }
+        if (zoomResetBtn) {
+            zoomResetBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                resetZoom(true);
+            });
+        }
+        if (zoomFitBtn) {
+            zoomFitBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                resetZoom(true);
+            });
+        }
+
+        return {
+            zoomTo,
+            resetZoom,
+            zoomIn: () => zoomTo(scale * zoomStep, 0, 0, true),
+            zoomOut: () => zoomTo(scale / zoomStep, 0, 0, true),
+            getScale: () => scale,
+            showHint
+        };
+    }
+
+
+    // 3.1 Brochure Preview Modal (Sleek Dark Viewer with Scroll-to-Zoom & Pan)
     const brochureModal = document.getElementById('brochure-modal');
     const brochureModalClose = document.getElementById('brochure-modal-close');
     const brochureModalTitle = document.getElementById('brochure-modal-title');
@@ -96,6 +388,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const brochureModalDownload = document.getElementById('brochure-modal-download');
     const brochureModalExternal = document.getElementById('brochure-modal-external');
     const previewBrochureBtns = document.querySelectorAll('.btn-preview-brochure');
+
+    const brochureViewer = createZoomPanViewer({
+        viewportEl: document.getElementById('brochure-zoom-viewport'),
+        imageEl: brochureModalImg,
+        zoomInBtn: document.getElementById('brochure-zoom-in'),
+        zoomOutBtn: document.getElementById('brochure-zoom-out'),
+        zoomResetBtn: document.getElementById('brochure-zoom-reset'),
+        zoomFitBtn: document.getElementById('brochure-zoom-fit'),
+        percentBadgeEl: document.getElementById('brochure-zoom-percent'),
+        hintBadgeEl: document.getElementById('brochure-hint-badge'),
+        onCloseRequest: closeBrochureModal
+    });
 
     function openBrochureModal(unitName, brochureUrl) {
         if (!brochureModal) return;
@@ -108,11 +412,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (brochureModalDownload) {
             brochureModalDownload.href = brochureUrl;
-            const cleanName = unitName.replace(/[^a-zA-Z0-9]/g, '-');
+            const cleanName = unitName.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
             brochureModalDownload.setAttribute('download', `Brosur-${cleanName}.jpg`);
+            brochureModalDownload.setAttribute('title', `Unduh Brosur ${unitName}`);
         }
         if (brochureModalExternal) {
             brochureModalExternal.href = brochureUrl;
+        }
+
+        if (brochureViewer) {
+            brochureViewer.resetZoom(false);
+            brochureViewer.showHint();
         }
 
         brochureModal.classList.remove('hidden');
@@ -126,11 +436,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeBrochureModal() {
         if (!brochureModal) return;
         brochureModal.classList.add('hidden');
-        if (brochureModalImg) {
-            brochureModalImg.src = '';
-        }
+        if (brochureViewer) brochureViewer.resetZoom(false);
+        if (brochureModalImg) brochureModalImg.src = '';
         document.body.style.overflow = '';
     }
+
+    // Expose globally for inline onclick triggers
+    window.openBrochureModal = openBrochureModal;
+    window.closeBrochureModal = closeBrochureModal;
 
     if (previewBrochureBtns.length > 0) {
         previewBrochureBtns.forEach(btn => {
@@ -150,19 +463,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (brochureModal) {
-        brochureModal.addEventListener('click', (e) => {
-            if (e.target === brochureModal) {
-                closeBrochureModal();
-            }
-        });
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && brochureModal && !brochureModal.classList.contains('hidden')) {
-            closeBrochureModal();
-        }
-    });
 
 
     // 4. Accordion Toggle (FAQ, Persyaratan, Rincian Biaya)
@@ -193,18 +493,43 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // 5. Gallery Category Filter & Lightbox Modal
+    // 5. Gallery Category Filter & Facility Lightbox Modal (with Scroll-to-Zoom & Pan)
     const filterBtns = document.querySelectorAll('.gallery-filter-btn');
     const galleryItems = document.querySelectorAll('.gallery-item');
     const lightboxModal = document.getElementById('lightbox-modal');
     const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxCategory = document.getElementById('lightbox-category');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+    const lightboxCounterMobile = document.getElementById('lightbox-counter-mobile');
+    const lightboxDownload = document.getElementById('lightbox-download');
+    const lightboxExternal = document.getElementById('lightbox-external');
     const lightboxClose = document.getElementById('lightbox-close');
     const lightboxPrev = document.getElementById('lightbox-prev');
     const lightboxNext = document.getElementById('lightbox-next');
 
     let visibleGalleryItems = [];
     let currentLightboxIndex = 0;
+
+    function closeLightbox() {
+        if (!lightboxModal) return;
+        lightboxModal.classList.add('hidden');
+        if (facilityViewer) facilityViewer.resetZoom(false);
+        if (lightboxImg) lightboxImg.src = '';
+        document.body.style.overflow = '';
+    }
+
+    const facilityViewer = createZoomPanViewer({
+        viewportEl: document.getElementById('lightbox-zoom-viewport'),
+        imageEl: lightboxImg,
+        zoomInBtn: document.getElementById('lightbox-zoom-in'),
+        zoomOutBtn: document.getElementById('lightbox-zoom-out'),
+        zoomResetBtn: document.getElementById('lightbox-zoom-reset'),
+        zoomFitBtn: document.getElementById('lightbox-zoom-fit'),
+        percentBadgeEl: document.getElementById('lightbox-zoom-percent'),
+        hintBadgeEl: document.getElementById('lightbox-hint-badge'),
+        onCloseRequest: closeLightbox
+    });
 
     // Filter Logic
     if (filterBtns.length > 0 && galleryItems.length > 0) {
@@ -249,14 +574,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentItem = visibleGalleryItems[currentLightboxIndex];
 
         const imgSrc = currentItem.getAttribute('data-image');
-        const title = currentItem.getAttribute('data-title');
-        const category = currentItem.getAttribute('data-category');
+        const title = currentItem.getAttribute('data-title') || 'Fasilitas Assunnah';
+        const category = currentItem.getAttribute('data-category') || 'Fasilitas';
 
-        if (lightboxImg) lightboxImg.src = imgSrc;
-        if (lightboxCaption) {
-            lightboxCaption.innerHTML = `
-                <p class="text-xs text-slate-400 mt-2 font-medium">${currentLightboxIndex + 1} / ${visibleGalleryItems.length}</p>
-            `;
+        if (facilityViewer) {
+            facilityViewer.resetZoom(false);
+        }
+
+        if (lightboxImg) {
+            lightboxImg.src = imgSrc;
+            lightboxImg.alt = title;
+        }
+        if (lightboxTitle) lightboxTitle.textContent = title;
+        if (lightboxCategory) lightboxCategory.textContent = category;
+        if (lightboxCounter) lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${visibleGalleryItems.length}`;
+        if (lightboxCounterMobile) lightboxCounterMobile.textContent = `Foto ${currentLightboxIndex + 1} dari ${visibleGalleryItems.length}`;
+
+        if (lightboxDownload) {
+            lightboxDownload.href = imgSrc;
+            const cleanTitle = title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
+            lightboxDownload.setAttribute('download', `Fasilitas-${cleanTitle}.webp`);
+            lightboxDownload.setAttribute('title', `Unduh Foto ${title}`);
+        }
+        if (lightboxExternal) {
+            lightboxExternal.href = imgSrc;
+        }
+
+        if (facilityViewer) {
+            facilityViewer.showHint();
+        }
+
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
         }
     }
 
@@ -272,30 +621,44 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        function closeLightbox() {
-            lightboxModal.classList.add('hidden');
-            if (lightboxImg) lightboxImg.src = '';
-            document.body.style.overflow = '';
-        }
-
         if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
         if (lightboxPrev) lightboxPrev.addEventListener('click', () => showLightboxItem(currentLightboxIndex - 1));
         if (lightboxNext) lightboxNext.addEventListener('click', () => showLightboxItem(currentLightboxIndex + 1));
-
-        lightboxModal.addEventListener('click', (e) => {
-            if (e.target === lightboxModal || e.target.classList.contains('lightbox-overlay')) {
-                closeLightbox();
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (!lightboxModal.classList.contains('hidden')) {
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowLeft') showLightboxItem(currentLightboxIndex - 1);
-                if (e.key === 'ArrowRight') showLightboxItem(currentLightboxIndex + 1);
-            }
-        });
     }
+
+    // Comprehensive Keyboard Shortcuts for both Modals
+    document.addEventListener('keydown', (e) => {
+        // 1. Brochure Modal Shortcuts
+        if (brochureModal && !brochureModal.classList.contains('hidden')) {
+            if (e.key === 'Escape') {
+                closeBrochureModal();
+            } else if (e.key === '+' || e.key === '=') {
+                if (brochureViewer) brochureViewer.zoomIn();
+            } else if (e.key === '-' || e.key === '_') {
+                if (brochureViewer) brochureViewer.zoomOut();
+            } else if (e.key === '0') {
+                if (brochureViewer) brochureViewer.resetZoom(true);
+            }
+            return;
+        }
+
+        // 2. Facility Lightbox Shortcuts
+        if (lightboxModal && !lightboxModal.classList.contains('hidden')) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                showLightboxItem(currentLightboxIndex - 1);
+            } else if (e.key === 'ArrowRight') {
+                showLightboxItem(currentLightboxIndex + 1);
+            } else if (e.key === '+' || e.key === '=') {
+                if (facilityViewer) facilityViewer.zoomIn();
+            } else if (e.key === '-' || e.key === '_') {
+                if (facilityViewer) facilityViewer.zoomOut();
+            } else if (e.key === '0') {
+                if (facilityViewer) facilityViewer.resetZoom(true);
+            }
+        }
+    });
 
     // 6. Floating Back to Top Button Visibility & Scroll Action
     const backToTopContainer = document.getElementById('back-to-top');

@@ -94,19 +94,224 @@
 </footer>
 
 
-<!-- Lightbox Image Modal Container -->
-<div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 hidden flex items-center justify-center p-4 select-none">
-    <button id="lightbox-close" aria-label="Tutup" class="absolute top-6 right-6 text-white/80 hover:text-white p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all z-10 cursor-pointer">
-        <i data-lucide="x" class="w-7 h-7"></i>
-    </button>
-    <button id="lightbox-prev" aria-label="Sebelumnya" class="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 text-white/80 hover:text-white p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all z-10 cursor-pointer">
-        <i data-lucide="chevron-left" class="w-8 h-8"></i>
-    </button>
-    <button id="lightbox-next" aria-label="Selanjutnya" class="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 text-white/80 hover:text-white p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all z-10 cursor-pointer">
-        <i data-lucide="chevron-right" class="w-8 h-8"></i>
-    </button>
-    <div class="max-w-4xl max-h-[90vh] flex flex-col items-center">
-        <img id="lightbox-img" src="" alt="Galeri Preview" class="max-h-[75vh] w-auto object-contain rounded-lg shadow-2xl border border-white/10 transition-all duration-200">
-        <div id="lightbox-caption" class="mt-4 text-center"></div>
+<!-- =========================================================================
+     1. Brochure Preview Modal (Sleek High-Res Viewer with Scroll-to-Zoom & Pan)
+     ========================================================================= -->
+<div id="brochure-modal"
+     class="fixed inset-0 z-[99999] bg-[#070D18]/95 backdrop-blur-md hidden flex flex-col select-none overflow-hidden"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="brochure-modal-title">
+
+    <!-- Top Navigation & Controls Toolbar -->
+    <header class="w-full h-14 bg-slate-900/90 border-b border-white/10 px-3 sm:px-6 flex items-center justify-between text-white shrink-0 z-30 backdrop-blur-md">
+        <!-- Title & Unit Context -->
+        <div class="flex items-center gap-2.5 sm:gap-3 min-w-0 pr-2">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-heading font-bold uppercase tracking-wider bg-white/10 text-[#E8D595] shrink-0 border border-white/10">
+                <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                <span>Brosur</span>
+            </span>
+            <div class="min-w-0">
+                <h3 id="brochure-modal-title" class="font-heading font-bold text-sm sm:text-base text-white truncate leading-snug">
+                    Preview Brosur
+                </h3>
+                <p class="text-[11px] text-slate-400 truncate hidden sm:block">PPDB Yayasan Assunnah Cirebon 2027/2028</p>
+            </div>
+        </div>
+
+        <!-- Zoom Controls Center -->
+        <div class="flex items-center gap-1 sm:gap-1.5 bg-slate-950/70 p-1 rounded-lg border border-white/10 shrink-0">
+            <button type="button" 
+                    id="brochure-zoom-out" 
+                    title="Zoom Out (-)" 
+                    class="w-7 h-7 sm:w-8 sm:h-8 rounded-md hover:bg-white/10 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer">
+                <i data-lucide="minus" class="w-4 h-4"></i>
+            </button>
+            <button type="button" 
+                    id="brochure-zoom-reset" 
+                    title="Reset Zoom (100%)" 
+                    class="px-2 h-7 sm:h-8 rounded-md hover:bg-white/10 text-slate-300 hover:text-white font-mono text-xs font-semibold flex items-center justify-center transition-all cursor-pointer">
+                <span id="brochure-zoom-percent">100%</span>
+            </button>
+            <button type="button" 
+                    id="brochure-zoom-in" 
+                    title="Zoom In (+)" 
+                    class="w-7 h-7 sm:w-8 sm:h-8 rounded-md hover:bg-white/10 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+            </button>
+            <button type="button" 
+                    id="brochure-zoom-fit" 
+                    title="Sesuaikan Layar" 
+                    class="w-7 h-7 sm:w-8 sm:h-8 rounded-md hover:bg-white/10 text-slate-300 hover:text-white hidden sm:flex items-center justify-center transition-all cursor-pointer">
+                <i data-lucide="maximize" class="w-3.5 h-3.5"></i>
+            </button>
+        </div>
+
+        <!-- Actions: Download & Close -->
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0 pl-2">
+            <!-- Dedicated Fixed Download Button -->
+            <a id="brochure-modal-download" 
+               href="#" 
+               download 
+               class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-heading font-bold bg-[#1E4E8C] hover:bg-[#2868b8] text-white transition-all shadow-md cursor-pointer border border-blue-400/30">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline">Download Brosur</span>
+            </a>
+            <a id="brochure-modal-external" 
+               href="#" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               title="Buka Gambar di Tab Baru" 
+               class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white hidden sm:flex items-center justify-center transition-all cursor-pointer border border-white/5">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+            <button type="button" 
+                    id="brochure-modal-close" 
+                    onclick="closeBrochureModal()" 
+                    aria-label="Tutup Preview Brosur" 
+                    title="Tutup (Esc)" 
+                    class="w-8 h-8 rounded-lg bg-white/10 hover:bg-rose-500/80 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer border border-white/5 ml-1">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Zoomable Viewport Area -->
+    <div id="brochure-zoom-viewport" 
+         class="flex-1 w-full relative overflow-hidden flex items-center justify-center cursor-default zoom-stage touch-none">
+        <img id="brochure-modal-img" 
+             src="" 
+             alt="Preview Brosur" 
+             class="zoom-image max-w-[94vw] max-h-[85vh] w-auto h-auto object-contain rounded-md shadow-2xl select-none pointer-events-auto">
+        
+        <!-- Floating Interaction Hint Badge -->
+        <div id="brochure-hint-badge" class="absolute bottom-5 left-1/2 -translate-x-1/2 pointer-events-none px-4 py-1.5 rounded-full bg-slate-900/80 border border-white/10 backdrop-blur-md text-[11px] text-slate-300 flex items-center gap-2 shadow-xl opacity-90 transition-opacity duration-300">
+            <i data-lucide="mouse-pointer" class="w-3.5 h-3.5 text-[#E8D595]"></i>
+            <span>Scroll mouse untuk zoom • Drag untuk menggeser • Dobel klik reset</span>
+        </div>
     </div>
 </div>
+
+
+<!-- =========================================================================
+     2. Facility Lightbox Modal (High-Res Gallery with Scroll-to-Zoom, Pan & Nav)
+     ========================================================================= -->
+<div id="lightbox-modal"
+     class="fixed inset-0 z-[99999] bg-[#070D18]/95 backdrop-blur-md hidden flex flex-col select-none overflow-hidden"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="lightbox-title">
+
+    <!-- Top Navigation & Controls Toolbar -->
+    <header class="w-full h-14 bg-slate-900/90 border-b border-white/10 px-3 sm:px-6 flex items-center justify-between text-white shrink-0 z-30 backdrop-blur-md">
+        <!-- Title & Category Context -->
+        <div class="flex items-center gap-2 sm:gap-2.5 min-w-0 pr-2">
+            <span id="lightbox-category" class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-heading font-bold uppercase tracking-wider bg-white/10 text-[#E8D595] border border-white/10 shrink-0">
+                Fasilitas
+            </span>
+            <div class="min-w-0">
+                <h3 id="lightbox-title" class="font-heading font-bold text-sm sm:text-base text-white truncate leading-snug">
+                    Galeri Fasilitas
+                </h3>
+                <p id="lightbox-counter-mobile" class="text-[11px] text-slate-400 truncate sm:hidden">Foto 1 dari 16</p>
+            </div>
+        </div>
+
+        <!-- Center: Counter & Zoom Controls -->
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <!-- Counter Badge -->
+            <span id="lightbox-counter" class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-md text-xs font-mono font-semibold text-slate-300 bg-slate-950/70 border border-white/10">
+                1 / 16
+            </span>
+
+            <!-- Zoom Controls Group -->
+            <div class="flex items-center gap-1 sm:gap-1.5 bg-slate-950/70 p-1 rounded-lg border border-white/10">
+                <button type="button" 
+                        id="lightbox-zoom-out" 
+                        title="Zoom Out (-)" 
+                        class="w-7 h-7 sm:w-8 sm:h-8 rounded-md hover:bg-white/10 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer">
+                    <i data-lucide="minus" class="w-4 h-4"></i>
+                </button>
+                <button type="button" 
+                        id="lightbox-zoom-reset" 
+                        title="Reset Zoom (100%)" 
+                        class="px-2 h-7 sm:h-8 rounded-md hover:bg-white/10 text-slate-300 hover:text-white font-mono text-xs font-semibold flex items-center justify-center transition-all cursor-pointer">
+                    <span id="lightbox-zoom-percent">100%</span>
+                </button>
+                <button type="button" 
+                        id="lightbox-zoom-in" 
+                        title="Zoom In (+)" 
+                        class="w-7 h-7 sm:w-8 sm:h-8 rounded-md hover:bg-white/10 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                </button>
+                <button type="button" 
+                        id="lightbox-zoom-fit" 
+                        title="Sesuaikan Layar" 
+                        class="w-7 h-7 sm:w-8 sm:h-8 rounded-md hover:bg-white/10 text-slate-300 hover:text-white hidden sm:flex items-center justify-center transition-all cursor-pointer">
+                    <i data-lucide="maximize" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right: Download Image & Close -->
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0 pl-2">
+            <!-- Dedicated Fixed Download Button for Facility -->
+            <a id="lightbox-download" 
+               href="#" 
+               download 
+               class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-heading font-bold bg-[#1E4E8C] hover:bg-[#2868b8] text-white transition-all shadow-md cursor-pointer border border-blue-400/30">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline">Download Foto</span>
+            </a>
+            <a id="lightbox-external" 
+               href="#" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               title="Buka Foto di Tab Baru" 
+               class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white hidden sm:flex items-center justify-center transition-all cursor-pointer border border-white/5">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+            <button type="button" 
+                    id="lightbox-close" 
+                    aria-label="Tutup Galeri" 
+                    title="Tutup (Esc)" 
+                    class="w-8 h-8 rounded-lg bg-white/10 hover:bg-rose-500/80 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer border border-white/5 ml-1">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Zoomable Viewport Area -->
+    <div id="lightbox-zoom-viewport" 
+         class="flex-1 w-full relative overflow-hidden flex items-center justify-center cursor-default zoom-stage touch-none">
+        
+        <!-- Navigation Prev / Next Floating Arrows -->
+        <button id="lightbox-prev" 
+                type="button" 
+                aria-label="Foto Sebelumnya" 
+                title="Sebelumnya (Panah Kiri)" 
+                class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-slate-900/70 hover:bg-slate-800 text-white/90 hover:text-white border border-white/15 flex items-center justify-center shadow-xl backdrop-blur-md transition-all z-20 cursor-pointer">
+            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+        </button>
+
+        <button id="lightbox-next" 
+                type="button" 
+                aria-label="Foto Selanjutnya" 
+                title="Selanjutnya (Panah Kanan)" 
+                class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-slate-900/70 hover:bg-slate-800 text-white/90 hover:text-white border border-white/15 flex items-center justify-center shadow-xl backdrop-blur-md transition-all z-20 cursor-pointer">
+            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+        </button>
+
+        <img id="lightbox-img" 
+             src="" 
+             alt="Galeri Preview" 
+             class="zoom-image max-w-[94vw] max-h-[85vh] w-auto h-auto object-contain rounded-md shadow-2xl select-none pointer-events-auto">
+
+        <!-- Floating Interaction Hint Badge -->
+        <div id="lightbox-hint-badge" class="absolute bottom-5 left-1/2 -translate-x-1/2 pointer-events-none px-4 py-1.5 rounded-full bg-slate-900/80 border border-white/10 backdrop-blur-md text-[11px] text-slate-300 flex items-center gap-2 shadow-xl opacity-90 transition-opacity duration-300">
+            <i data-lucide="mouse-pointer" class="w-3.5 h-3.5 text-[#E8D595]"></i>
+            <span>Scroll mouse untuk zoom • Drag untuk menggeser • Tombol ◀ ▶ untuk ganti foto</span>
+        </div>
+    </div>
+</div>
+

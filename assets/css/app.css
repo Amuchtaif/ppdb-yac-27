@@ -192,21 +192,44 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 /* --------------------------------------------------------------------------
-   Brochure Preview Modal Animation
+   Immersive Preview Modals (Brochure & Facility Lightbox)
    -------------------------------------------------------------------------- */
-#brochure-modal {
-    transition: opacity 0.25s ease, visibility 0.25s ease;
+#brochure-modal,
+#lightbox-modal {
+    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
-#brochure-modal.hidden {
+
+#brochure-modal.hidden,
+#lightbox-modal.hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
-#brochure-modal:not(.hidden) {
+
+#brochure-modal:not(.hidden),
+#lightbox-modal:not(.hidden) {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
 }
+
+.zoom-stage {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    overflow: hidden;
+}
+
+.zoom-image {
+    transform-origin: center center;
+    will-change: transform;
+    user-select: none;
+    -webkit-user-drag: none;
+    backface-visibility: hidden;
+    max-width: 94vw;
+    max-height: 85vh;
+}
+
 
 /* --------------------------------------------------------------------------
    React Bits - Particles Component Styles
